@@ -1,5 +1,11 @@
 <?php
 
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+// PRAKTIKUM ROUTING
 Route::get('/', function () {
     return view('welcome');
 });
@@ -57,3 +63,26 @@ Route::redirect('/here', '/there');
 
 Route::view('/welcome', 'welcome');
 Route::view('/welcome', 'welcome', ['name' => 'Taylor']);
+
+
+// PRAKTIKUM CONTROLLER
+Route::get('/hello', [WelcomeController::class, 'hello']);
+
+
+// Route::get('/', [PageController::class, 'index']);
+// Route::get('/about', [PageController::class, 'index']);
+// Route::get('/articles/{id}', [PageController::class, 'index']);
+
+Route::get('/', [HomeController::class, 'index']);
+Route::get('/about', [AboutController::class, 'index']);
+Route::get('/articles/{id}', [ArticleController::class, 'index']);
+
+
+Route::resource('photos', PhotoController::class);
+
+Route::resource('photos', PhotoController::class)->only([
+    'index', 'show'
+]);
+Route::resource('photos', PhotoController::class)->except([
+    'create', 'store', 'update', 'destroy'
+]);
